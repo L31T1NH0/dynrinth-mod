@@ -1,0 +1,29 @@
+modLoader   = "javafml"
+loaderVersion = "[4,)"
+license       = "MIT"
+
+[[dependencies.dynrinth]]
+    modId      = "neoforge"
+    type       = "required"
+    versionRange = "[21.1,)"
+    ordering   = "NONE"
+    side       = "CLIENT"
+
+[[dependencies.dynrinth]]
+    modId      = "minecraft"
+    type       = "required"
+    versionRange = "[1.21.1,)"
+    ordering   = "NONE"
+    side       = "BOTH"
+
+[[mods]]
+modId       = "dynrinth"
+version     = "${file.jarVersion}"
+displayName = "Dynrinth"
+description = "Install Minecraft mod lists from Dynrinth codes using /dynrinth <code>"
+logoFile    = "dynrinth.png"
+
+[[authors]]
+name = "L31T1NH0"
+
+[issueTrackerURL]

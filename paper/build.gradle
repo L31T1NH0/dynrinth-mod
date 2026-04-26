@@ -1,0 +1,10 @@
+repositories {
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
+}
+
+base { archivesName = 'dynrinth-paper' }
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:${project.paper_api_version}"
+    implementation project(':common')
+}

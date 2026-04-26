@@ -1,0 +1,18 @@
+name: Dynrinth
+version: '${version}'
+main: com.dynrinth.DynrinthPlugin
+api-version: '1.21'
+description: Install Minecraft plugin lists from Dynrinth codes using /dynrinth <code>
+authors: [L31T1NH0]
+website: https://github.com/L31T1NH0/dynrinth-mod
+
+commands:
+  dynrinth:
+    description: Install or remove a Dynrinth modpack
+    usage: /dynrinth <code> [force] | /dynrinth remove <code>
+    permission: dynrinth.use
+
+permissions:
+  dynrinth.use:
+    description: Allows using the /dynrinth command
+    default: op

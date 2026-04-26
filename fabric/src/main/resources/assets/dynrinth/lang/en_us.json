@@ -1,0 +1,16 @@
+{
+  "dynrinth.command.invalid_code":    "Invalid code. Expected 10 characters.",
+  "dynrinth.command.fetching":        "Fetching modpack...",
+  "dynrinth.command.downloading":     "Downloading (%s/%s) %s",
+  "dynrinth.command.done":            "Done! %s mod(s) installed.",
+  "dynrinth.command.restart":         "Restart the game to activate the mods.",
+  "dynrinth.command.not_found":       "Code not found or invalid.",
+  "dynrinth.command.modrinth_only":   "Only Modrinth mod lists are supported.",
+  "dynrinth.command.no_versions":     "No compatible mods found on Modrinth.",
+  "dynrinth.command.mismatch_line1":  "This modpack targets MC %s",
+  "dynrinth.command.mismatch_line2":  "You are running MC %s",
+  "dynrinth.command.download_anyway": "▶ Download anyway",
+  "dynrinth.command.cancel":          "✗ Cancel",
+  "dynrinth.command.remove_done":     "Removed %s mod(s). Restart to apply changes.",
+  "dynrinth.command.remove_unknown":  "No installation record for code %s."
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "dynrinth",
+  "version": "${version}",
+  "name": "Dynrinth",
+  "description": "Install Minecraft mod lists from Dynrinth codes using /dynrinth <code>",
+  "authors": ["L31T1NH0"],
+  "contact": {
+    "sources": "https://github.com/L31T1NH0/dynrinth-mod"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.dynrinth.DynrinthMod"]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
