@@ -11,6 +11,7 @@ public class ModrinthVersion {
     public List<String> gameVersions;
     public List<String> loaders;
     public List<ModrinthFile> files;
+    public List<Dependency> dependencies;
 
     public static class ModrinthFile {
         public String url;
@@ -19,8 +20,16 @@ public class ModrinthVersion {
         public Map<String, String> hashes; // "sha1", "sha512"
     }
 
+    public static class Dependency {
+        public String project_id;
+        public String dependency_type; // "required", "optional", "incompatible", "embedded"
+    }
+
     public ModrinthFile getPrimaryFile() {
         if (files == null || files.isEmpty()) return null;
-        return files.stream().filter(f -> f.primary).findFirst().orElse(files.get(0));
+        for (ModrinthFile file : files) {
+            if (file.primary) return file;
+        }
+        return files.get(0);
     }
 }

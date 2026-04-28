@@ -4,10 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +27,18 @@ public class PackTracker {
 
     public void record(String code, List<String> filenames) {
         Map<String, List<String>> packs = load();
-        packs.put(code.toUpperCase(), new ArrayList<>(filenames));
+        String key = code.toUpperCase();
+        List<String> unique = new ArrayList<>(new LinkedHashSet<>(filenames));
+
+        if (unique.isEmpty()) packs.remove(key);
+        else packs.put(key, unique);
+
         save(packs);
     }
 
     public List<String> getFilenames(String code) {
-        return load().getOrDefault(code.toUpperCase(), List.of());
+        List<String> filenames = load().get(code.toUpperCase());
+        return filenames != null ? filenames : Collections.<String>emptyList();
     }
 
     public boolean hasCode(String code) {
@@ -39,17 +48,20 @@ public class PackTracker {
     private Map<String, List<String>> load() {
         if (!Files.exists(file)) return new LinkedHashMap<>();
         try {
-            String json = Files.readString(file);
+            String json = new String(Files.readAllBytes(file), StandardCharsets.UTF_8);
             Map<String, List<String>> map = GSON.fromJson(
                 json, new TypeToken<Map<String, List<String>>>() {}.getType());
             return map != null ? new LinkedHashMap<>(map) : new LinkedHashMap<>();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.err.println("[Dynrinth] Failed to read pack tracker (will reset): " + e.getMessage());
             return new LinkedHashMap<>();
         }
     }
 
     private void save(Map<String, List<String>> packs) {
-        try { Files.writeString(file, GSON.toJson(packs)); }
-        catch (IOException ignored) {}
+        try { Files.write(file, GSON.toJson(packs).getBytes(StandardCharsets.UTF_8)); }
+        catch (IOException e) {
+            System.err.println("[Dynrinth] Failed to save pack tracker: " + e.getMessage());
+        }
     }
 }

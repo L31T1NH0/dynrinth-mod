@@ -1,10 +1,38 @@
 repositories {
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 }
 
 base { archivesName = 'dynrinth-paper' }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 8
+    it.options.encoding = 'UTF-8'
+}
+
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:${project.paper_api_version}"
+    compileOnly "org.spigotmc:spigot-api:${project.paper_api_version}"
     implementation project(':common')
+}
+
+tasks.named('jar') {
+    from(project(':common').sourceSets.main.output)
+}
+
+tasks.named('sourcesJar') {
+    from(project(':common').sourceSets.main.allSource)
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand version: project.version
+    }
 }

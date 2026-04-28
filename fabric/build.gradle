@@ -4,6 +4,17 @@ plugins {
 
 base { archivesName = 'dynrinth-fabric' }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = 'UTF-8'
+}
+
 loom { mixin { defaultRefmapName = 'dynrinth.refmap.json' } }
 
 dependencies {
@@ -12,6 +23,14 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation    project(':common')
+}
+
+tasks.named('jar') {
+    from(project(':common').sourceSets.main.output)
+}
+
+tasks.named('sourcesJar') {
+    from(project(':common').sourceSets.main.allSource)
 }
 
 processResources {

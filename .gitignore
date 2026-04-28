@@ -1,8 +1,8 @@
 # Gradle
 .gradle/
+.gradle-test-kit/
 **/build/
 **/out/
-!src/**/build/
 gradle-app.setting
 .gradletasknamecache
 
@@ -12,18 +12,37 @@ gradle-app.setting
 
 # IDEs and editors
 .idea/
-*.iml
 .vscode/
 .project
 .classpath
 .settings/
+**/.settings/
+**/.eclipse/
+*.iml
+*.ipr
+*.iws
+*.launch
+.factorypath
 
-# Runtime/dev files (Minecraft)
+# Java / JVM
+*.class
+*.hprof
+hs_err_pid*
+replay_pid*
+
+# Runtime/dev files (Minecraft / Paper)
 run/
+runs/
 logs/
 crash-reports/
 *.log
-hs_err_pid*
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.orig
+*.rej
 
 # OS files
 .DS_Store

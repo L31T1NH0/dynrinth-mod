@@ -1,10 +1,7 @@
 package com.dynrinth;
 
 import com.dynrinth.command.DynrinthCommand;
-import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
-import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DynrinthPlugin extends JavaPlugin {
@@ -16,17 +13,24 @@ public class DynrinthPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
-        manager.registerEventHandler(LifecycleEvents.COMMANDS, event ->
-            DynrinthCommand.register(event.registrar())
-        );
+
+        PluginCommand command = getCommand("dynrinth");
+        if (command == null) {
+            getLogger().severe("Command 'dynrinth' is missing from plugin.yml.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        DynrinthCommand handler = new DynrinthCommand();
+        command.setExecutor(handler);
+        command.setTabCompleter(handler);
         getLogger().info("Dynrinth plugin loaded.");
     }
 
     public static DynrinthPlugin getInstance() { return instance; }
 
     public static String userAgent() {
-        return "dynrinth-plugin/" + instance.getPluginMeta().getVersion()
+        return "dynrinth-plugin/" + instance.getDescription().getVersion()
             + " (github.com/L31T1NH0/dynrinth-mod)";
     }
 }
